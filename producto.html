@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEnd Store</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html">
+            <img class="header__logo" src="img/logo.png" alt="Logotipo">
+        </a>
+    </header>
+
+    <nav class="navegacion">
+        <a class="navegacion__enlace navegacion__enlace--activo" href="index.html">Tienda</a>
+        <a class="navegacion__enlace" href="nosotros.html">Nosotros</a>
+    </nav>
+
+    <main class="contenedor">
+        <h1>Camiseta de Perú</h1>
+
+        <div class="camisa">
+            <img class="camisa__imagen" src="img/1.jpg" alt="Imagen del Producto">
+
+            <div class="camisa__contenido">
+                <p>Maecenas consectetur ultricies mi vel venenatis. Curabitur risus tellus, congue non tellus at, semper
+                    dapibus turpis. Duis pellentesque, risus sit amet placerat porttitor, tortor augue volutpat ante,
+                    non dignissim odio ligula at arcu.</p>
+
+                <form class="formulario">
+                    <select class="formulario__campo">
+                        <option disabled selected>-- Seleccionar Talla --</option>
+                        <option>Chica</option>
+                        <option>Mediana</option>
+                        <option>Grande</option>
+                    </select>
+                    <input class="formulario__campo" type="number" placeholder="Cantidad" min="1">
+                    <input class="formulario__submit" type="submit" value="Agregar al Carrito">
+
+                    <!-- Ventana Modal -->
+                    <input type="checkbox" id="btn-modal">
+                    <label for="btn-modal" class="lbl-modal">Probador Virtual</label>
+                    <div class="modal">
+                        <div class="contenedorModal">
+                            <header>¡Bienvenidos!</header>
+                            <label for="btn-modal">X</label>
+                            <div class="contenido">
+                                <!-- Probado Virtual -->
+
+                                <canvas id="canvas" width="300" height="532"></canvas>
+                                <input type="range" min="1" max="400" step="0.5" value="1" id="slider">
+
+                                <!-- tabla -->
+                                <table class="table table-hover">
+                                    <tr>
+                                        <td>Edad: <input type="number" value="30"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Peso: <input type="number" value="55"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Altura: <input type="number" value="1.70"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pecho:<input type="number" value="90"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cintura:<input type="number" value="60"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cadera:<input type="number" value="90"> </td>
+                                    </tr>
+                                </table>
+
+                                <script>
+                                    const slider = document.querySelector('#slider')
+                                    const canvas = document.querySelector('#canvas')
+                                    slider.addEventListener('input', handleInputSlider)
+                                    const ctx = canvas.getContext('2d')
+                                    const images = []
+                                    window.addEventListener('load', pageLoaded)
+                                    function pageLoaded() {
+                                        for (let i = 1; i <= 400; i += 1) {
+                                            const number = i.toString().padStart(3, '000')
+                                            const url = `./img/video-probador-virtual_${number}.jpg`
+                                            const image = new Image()
+                                            image.src = url
+                                            image.addEventListener('load', () => {
+                                                images[i] = image
+                                                if (i === 1) {
+                                                    loadImage(i)
+                                                }
+                                            })
+                                        }
+                                    }
+                                    function loadImage(index) {
+                                        ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height)
+                                    }
+                                    function handleInputSlider() {
+                                        console.log(this.value)
+                                        loadImage(this.value)
+                                    }
+                                </script>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__texto">Front End Store - Todos los derechos Reservados 2022.</p>
+    </footer>
+
+</body>
+
+</html>
